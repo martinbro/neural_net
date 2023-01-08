@@ -1,0 +1,9 @@
+/go.mod
+/go.sum
+/layers_1_1_mean.txt
+/layers_2_1_bias.txt
+/layers_2_1_weights.txt
+/layers_4_1_bias.txt
+/layers_4_1_weights.txt
+/layers_6_1_bias.txt
+/layers_6_1_weights.txt
