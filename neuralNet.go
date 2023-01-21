@@ -6,6 +6,7 @@ import (
 	"math"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/martinbro/neural_net/data"
 	"gonum.org/v1/gonum/mat"
@@ -29,6 +30,7 @@ func main() {
 	inp := data.Input25()
 
 	// b := fmt.Sprint("./data/dat", time.Now().Format("13_50_01"), ".csv")
+	start := time.Now()
 	f, err := os.Create("./data/dat.csv")
 	check(err)
 	defer f.Close()
@@ -63,12 +65,13 @@ func main() {
 		lag2.Add(data.Layers_6_bias(), &lag2)
 		lag2.Apply(func(i, j int, v float64) float64 { return math.Min(1, math.Max(0, v)) }, &lag2)
 
-		fmt.Printf("%v;%v;%v\n", inputVals, lag2.At(0, 0), outp.At(0, i*100))
+		// fmt.Printf("%v;%v;%v\n", inputVals, lag2.At(0, 0), outp.At(0, i*100))
 		p := fmt.Sprint(inputVals, ";", lag2.At(0, 0), ";", outp.At(0, i*100))
 		s := strings.ReplaceAll(p, ".", ",")
 		fmt.Fprintf(w, "%v\n", s)
 		w.Flush()
 	}
+	fmt.Printf("%v", time.Since(start))
 
 	//
 	// lag2w := data.Layers_2_weights()
