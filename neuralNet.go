@@ -29,6 +29,27 @@ func main() {
 	outp := data.Ouput25()
 	inp := data.Input25()
 
+	var inpV [50]float64
+	movavr := inp.At(0, 0)
+	inpV[0] = movavr
+	fmt.Println(inp.At(0, 0), inp.At(3, 0))
+	fmt.Println(inp.At(0, 1), (inp.At(0, 0)+inp.At(0, 1))/2, inp.At(3, 1))
+	for i := 1; i < 75; i++ {
+		j := int(math.Mod(float64(i), 50))
+		if i < 50 {
+			movavr = (movavr*float64(i) + inp.At(0, i)) / float64(i+1)
+		} else {
+			movavr = movavr + (inp.At(0, i)-inpV[j])/50
+		}
+		inpV[j] = inp.At(0, i)
+		s := 0.0
+		for _, v := range inpV {
+			s += v
+		}
+
+		fmt.Printf("%d %.15f  %.15f %.15f\n", j, movavr, inp.At(3, i), s/50)
+	}
+
 	// b := fmt.Sprint("./data/dat", time.Now().Format("13_50_01"), ".csv")
 	start := time.Now()
 	f, err := os.Create("./data/dat.csv")
